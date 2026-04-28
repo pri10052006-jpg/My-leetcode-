@@ -69,7 +69,7 @@ class Solution {
     }
 }
 Given a string s, find the length of the longest substring without duplicate characters.
-class Solution{
+   class Solution{
     public int lengthOfLongestSubstring(String s) {
     int left = 0, maxLen = 0;
     HashSet<Character> set = new HashSet<>();
@@ -89,3 +89,119 @@ class Solution{
     return maxLen;
     }
 }
+Given a signed 32-bit integer x, return x with its digits reversed. If reversing x causes the value to go outside the signed 32-bit integer range [-231, 231 - 1], then return 0.
+
+class Solution {
+    public int reverse(int x) {
+        int n = 0;
+        
+        while (x != 0) {
+            int d = x % 10;
+            x /= 10;
+            if (n > Integer.MAX_VALUE / 10 || 
+                n < Integer.MIN_VALUE / 10) {
+                return 0;
+            }
+
+            n = n * 10 + d;
+        }
+        
+        return n;
+    }
+}
+You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the ith line are (i, 0) and (i, height[i]).
+
+Find two lines that together with the x-axis form a container, such that the container contains the most water.
+
+Return the maximum amount of water a container can store.
+
+Notice that you may not slant the container.
+class Solution {
+    public int maxArea(int[] height) {
+        int left = 0, right = height.length - 1;
+        int max = 0;
+
+        while (left < right) {
+            int h = Math.min(height[left], height[right]);
+            int width = right - left;
+            max = Math.max(max, h * width);
+
+            if (height[left] < height[right]) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+        return max;
+    }
+}
+Write a function to find the longest common prefix string amongst an array of strings.
+
+If there is no common prefix, return an empty string "".
+
+class Solution {
+    public String longestCommonPrefix(String[] strs) {
+        if (strs == null || strs.length == 0) {
+            return "";
+        }
+
+        int minLen = strs[0].length();
+        for (int i = 1; i < strs.length; i++) {
+            if (strs[i].length() < minLen) {
+                minLen = strs[i].length();
+            }
+        }
+
+        StringBuilder result = new StringBuilder();
+
+        for (int i = 0; i < minLen; i++) {
+            char current = strs[0].charAt(i);
+
+            for (int j = 1; j < strs.length; j++) {
+                if (strs[j].charAt(i) != current) {
+                    return result.toString();
+                }
+            }
+            result.append(current);
+        }
+
+        return result.toString();
+    }
+}
+ Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
+
+Notice that the solution set must not contain duplicate triplets.
+class Solution {
+    
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        Arrays.sort(nums);
+
+        for (int i = 0; i < nums.length - 2; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+
+            int l = i + 1, r = nums.length - 1;
+            while (l < r) {
+                int sum = nums[i] + nums[l] + nums[r];
+                if (sum == 0) {
+                    res.add(Arrays.asList(nums[i], nums[l], nums[r]));
+                    l++;
+                    r--;
+                    while (l < r && nums[l] == nums[l - 1]) l++;
+                    while (l < r && nums[r] == nums[r + 1]) r--;
+                } else if (sum < 0) {
+                    l++;
+                } else {
+                    r--;
+                }
+            }
+        }
+        return res;
+    
+    }
+}
+
+
+
+ 
+
