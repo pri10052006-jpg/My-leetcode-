@@ -200,7 +200,98 @@ class Solution {
     
     }
 }
+Given the head of a linked list, remove the nth node from the end of the list and return its head.
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
 
+        ListNode fast = dummy;
+        ListNode slow = dummy;
+
+        for (int i = 0; i < n; i++) {
+            fast = fast.next;
+        }
+
+        while (fast.next != null) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+
+        slow.next = slow.next.next;
+        return dummy.next;
+    }
+}
+Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+
+An input string is valid if:
+
+Open brackets must be closed by the same type of brackets.
+Open brackets must be closed in the correct order.
+Every close bracket has a corresponding open bracket of the same type.
+ 
+
+Example 1:
+
+Input: s = "()"
+
+Output: true
+
+Example 2:
+
+Input: s = "()[]{}"
+
+Output: true
+
+Example 3:
+
+Input: s = "(]"
+
+Output: false
+
+Example 4:
+
+Input: s = "([])"
+
+Output: true
+
+class Solution {
+    public boolean isValid(String s) {
+        int n=s.length();
+        char c[]=new char[n];
+        int t=-1;
+        for(int i=0;i<n;i++){
+            char ch=s.charAt(i);
+            if(ch=='('||ch=='{'||ch=='['){
+                t++;
+                c[t]=ch;
+            }
+            else{
+                if(t==-1)
+                return false;
+                if(ch=='}'&&c[t]=='{'||ch==')'&&c[t]=='('||ch==']'&&c[t]=='['){
+                    t--;
+                }
+                else{
+                    return false;
+                }
+            }
+        }
+        if(t==-1)
+        return true;
+        return false;
+    }
+}
 
 
  
